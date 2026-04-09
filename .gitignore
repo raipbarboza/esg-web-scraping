@@ -1,0 +1,31 @@
+# Credenciais — NUNCA subir para o Git
+.env
+
+# Dados brutos (podem ser grandes)
+data/*.csv
+data/*.xlsx
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
