@@ -121,6 +121,8 @@ Frameworks de referência: **GRI**, **TCFD**, **CDP**.
 
 🔗 [python-esg-studies](https://github.com/raipbarboza/python-esg-studies) — Fundamentos de Python aplicados a dados ESG
 
+🔗 [carbontrack-br](https://github.com/raipbarboza/carbontrack-br) — Pipeline de risco de carbono de empresas brasileiras
+
 ---
 
 ## 👩‍💻 Sobre
