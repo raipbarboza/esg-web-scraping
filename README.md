@@ -1,131 +1,55 @@
-# esg-web-scraping
-Coleta, armazenamento e análise de dados ESG públicos da Carteira ISE B3 — o principal índice de sustentabilidade empresarial do Brasil.
-# 🌿 esg-web-scraping
+# ESG Web Scraping
 
-Coleta, armazenamento e análise de dados ESG públicos da **Carteira ISE B3** — o principal índice de sustentabilidade empresarial do Brasil.
+Projeto de estudo para coleta, organização e análise de dados públicos da carteira ISE B3 com Python e PostgreSQL.
 
-O pipeline completo cobre desde o scraping até a análise final:
+**Estado atual:** estrutura inicial. Os quatro notebooks, os três scripts SQL, `requirements.txt` e `.env.example` estão vazios. Ainda não há pipeline executável ou análises produzidas por esses arquivos.
 
-```
-Web (B3) → requests/BeautifulSoup → PostgreSQL (limpeza em SQL) → Pandas (análise)
-```
+## Estrutura publicada
 
----
-
-## 📁 Estrutura do Repositório
-
-```
+```text
 esg-web-scraping/
-│
 ├── notebooks/
-│   ├── 01_fundamentos_requests_bs4.ipynb   # HTML, requests e BeautifulSoup
-│   ├── 02_coleta_ise_b3.ipynb              # Scraping da carteira ISE B3
-│   ├── 03_carga_postgres.ipynb             # Ingestão dos dados brutos no PostgreSQL
-│   └── 04_analise_pandas.ipynb             # Leitura das views e análise com Pandas
-│
+│   ├── 01_fundamentos_requests_bs4.ipynb
+│   ├── 02_coleta_ise_b3.ipynb
+│   ├── 03_carga_postgres.ipynb
+│   └── 04_analise_pandas.ipynb
 ├── sql/
-│   ├── 01_create_tables.sql                # Schema: raw + clean + views
-│   ├── 02_clean_data.sql                   # Limpeza e transformação
-│   └── 03_views_analiticas.sql             # Views prontas para consumo pelo Pandas
-│
+│   ├── 01_create_tables.sql
+│   ├── 02_clean_data.sql
+│   └── 03_views_analiticas.sql
 ├── data/
-│   └── ise_b3_raw.csv                      # Dados brutos coletados (gerado pelo notebook 02)
-│
-├── .env.example                            # Variáveis de ambiente (conexão DB)
+│   └── .gitkeep
+├── .env.example
 ├── requirements.txt
 └── README.md
 ```
 
----
+Esses arquivos reservam a organização pretendida; os notebooks vazios ainda não são documentos Jupyter válidos.
 
-## 🛠️ Tecnologias
+## Fluxo planejado
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4479A1?style=flat&logo=postgresql&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat&logo=jupyter&logoColor=white)
-![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=flat&logo=sqlalchemy&logoColor=white)
+1. Implementar a coleta, registrando fonte e data de referência.
+2. Salvar os dados brutos e definir seu esquema.
+3. Criar as tabelas e carregar os registros no PostgreSQL.
+4. Executar a limpeza e criar as views analíticas.
+5. Executar o notebook de análise sobre os dados preparados.
 
----
+As análises pretendidas incluem distribuição por setor e segmento de listagem. Comparações entre ciclos anuais dependerão da obtenção de dados históricos compatíveis.
 
-## 🚀 Como Executar
-
-### 1. Clone e instale as dependências
+## Como acompanhar
 
 ```bash
 git clone https://github.com/raipbarboza/esg-web-scraping.git
 cd esg-web-scraping
-pip install -r requirements.txt
 ```
 
-### 2. Configure as variáveis de ambiente
+Não há comandos de execução do pipeline nesta etapa. Dependências, credenciais de exemplo e instruções do banco serão documentadas junto com a implementação. Instalar o `requirements.txt` vazio ou executar os SQLs vazios não prepara o ambiente descrito no planejamento.
 
-```bash
-cp .env.example .env
-# Edite o .env com suas credenciais do PostgreSQL
-```
+## Projetos relacionados
 
-### 3. Crie o banco de dados e as tabelas
+- [Python ESG Studies](https://github.com/raipbarboza/python-esg-studies): estudos de Python e exploração de dados.
+- [CarbonTrack BR](https://github.com/raipbarboza/carbontrack-br): CSVs e recortes exploratórios de companhias brasileiras.
 
-```bash
-psql -U seu_usuario -c "CREATE DATABASE esg_db;"
-psql -U seu_usuario -d esg_db -f sql/01_create_tables.sql
-```
+## Autor
 
-### 4. Execute os notebooks em ordem
-
-| Notebook | O que faz |
-|----------|-----------|
-| `01_fundamentos_requests_bs4.ipynb` | Introdução ao scraping |
-| `02_coleta_ise_b3.ipynb` | Coleta a carteira ISE B3 e salva CSV bruto |
-| `03_carga_postgres.ipynb` | Carrega o CSV na tabela `ise_b3_raw` |
-| `04_analise_pandas.ipynb` | Lê as views limpas e gera análises |
-
-### 5. Execute a limpeza SQL
-
-```bash
-psql -U seu_usuario -d esg_db -f sql/02_clean_data.sql
-psql -U seu_usuario -d esg_db -f sql/03_views_analiticas.sql
-```
-
----
-
-## 🗄️ Modelo de Dados
-
-```
-ise_b3_raw          → dados brutos ingeridos pelo Python
-ise_b3_clean        → dados padronizados e validados via SQL
-vw_empresas_por_setor   → agregação por setor (consumida pelo Pandas)
-vw_segmentos_listagem   → distribuição por segmento de listagem
-```
-
----
-
-## 📊 Análises Geradas
-
-- Distribuição de empresas ISE por setor econômico
-- Representação por segmento de listagem (Novo Mercado, Nível 2, etc.)
-- Evolução da carteira ao longo dos ciclos anuais (roadmap)
-
----
-
-## 🌍 Sobre o ISE B3
-
-O ISE B3 é uma iniciativa pioneira na América Latina, criado em 2005, e tem como objetivo medir o desempenho das empresas listadas na B3 em relação a critérios ambientais, sociais e de governança.
-
-Frameworks de referência: **GRI**, **TCFD**, **CDP**.
-
----
-
-## 📂 Projetos Relacionados
-
-🔗 [python-esg-studies](https://github.com/raipbarboza/python-esg-studies) — Fundamentos de Python aplicados a dados ESG
-
-🔗 [carbontrack-br](https://github.com/raipbarboza/carbontrack-br) — Pipeline de risco de carbono de empresas brasileiras
-
----
-
-## 👩‍💻 Sobre
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rai-pereira-barboza-01a90a262)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/raipbarboza)
+[Rai Barboza](https://www.linkedin.com/in/rai-barboza-01a90a262/)
